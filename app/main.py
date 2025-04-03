@@ -1,8 +1,11 @@
+from typing import Union
+
+
 class Car:
 
     def __init__(self,
                  comfort_class: int,
-                 clean_mark: int or float,
+                 clean_mark: Union[int, float],
                  brand: str) -> None:
         self.comfort_class = comfort_class
         self.clean_mark = clean_mark
@@ -13,29 +16,31 @@ class CarWashStation:
 
     def __init__(self, distance_from_city_center: int,
                  clean_power: int,
-                 average_rating: int or float,
+                 average_rating: Union[int, float],
                  count_of_ratings: int) -> None:
         self.distance_from_city_center = distance_from_city_center
         self.clean_power = clean_power
         self.average_rating = average_rating
         self.count_of_ratings = count_of_ratings
 
-    def serve_cars(self, exam_car: list) -> int or float:
+    def serve_cars(self, cars: list) -> int or float:
         self.sum = 0
-        for car in exam_car:
+        for car in cars:
             if car.clean_mark <= self.clean_power:
                 self.sum += self.wash_single_car(car)
                 car.clean_mark = self.clean_power
 
         return round(self.sum, 1)
 
-    def calculate_washing_price(self, car: Car) -> None:
+    def calculate_washing_price(self, car: Car) -> Union[int, float]:
         return round(
             (car.comfort_class
              * (((self.clean_power - car.clean_mark)
                  * self.average_rating) / self.distance_from_city_center)), 1)
 
-    def wash_single_car(self, car: Car) -> None:
+    def wash_single_car(self, car: Car) -> float:
+        if self.clean_power < car.clean_mark:
+            car.clean_mark = self.clean_power
         return self.calculate_washing_price(car)
 
     def rate_service(self, new_rate: int) -> None:
