@@ -39,8 +39,8 @@ class CarWashStation:
                  * self.average_rating) / self.distance_from_city_center)), 1)
 
     def wash_single_car(self, car: Car) -> float:
-        if self.clean_power < car.clean_mark:
-            car.clean_mark = self.clean_power
+        # if self.clean_power > car.clean_mark:
+        #     car.clean_mark = self.clean_power
         return self.calculate_washing_price(car)
 
     def rate_service(self, new_rate: int) -> None:
